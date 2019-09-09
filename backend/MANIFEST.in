@@ -1,0 +1,4 @@
+include webcomics/schema.sql
+graft webcomics/static
+graft webcomics/templates
+global-exclude *.pyc
