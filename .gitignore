@@ -1,3 +1,5 @@
 comics/
 
 *.swp
+
+**/.DS_Store

@@ -6,18 +6,21 @@
 </head>
 </body>
     <div class="container">
-        <div class="row">
-            <h1 class="ten columns">webcomics</h1>
+        <div class="row middle-xs">
+            <h1 class="col-xs">
+                <a class="subtle-link" href="{{ url_for('index') }}">webcomics</a>
+            </h1>
             {% if g.user %}
-                <span>{{ g.user['username'] }}</span>
-                <div>
-                    <a href="{{ url_for('auth.logout') }}">Log Out</a>
-                </div>
+            <span>{{ g.user['username'] }}</span>
+            <div class="col-xs end-xs bottom-xs">
+                <a href="{{ url_for('auth.logout') }}">Log Out</a>
+            </div>
             {% else %}
                 <a href="{{ url_for('auth.login') }}">Log In</a>
             {% endif %}
         </div>
-    </nav>
+        <hr class="header-divider"/>
+    </div>
     <section class="content">
         <header>
             {% block header %}{% endblock %}
