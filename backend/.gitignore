@@ -5,6 +5,6 @@ __pycache__/
 
 dist/
 build/
-*.egg-ingo/
+*.egg-info/
 
 instance/
