@@ -1,6 +1,37 @@
 import os
+import sys
+from logging.config import dictConfig
 
 from flask import Flask
+
+
+# Configure logging
+dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }
+    },
+    'handlers': {
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'default',
+            'filename': os.path.join(os.path.expanduser('~'), 'webcomics', 'logs', 'app.log'),
+            'maxBytes': 4096,
+            'backupCount': 3
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stderr,
+            'formatter': 'default'
+        }
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['file', 'console']
+    }
+})
 
 
 def create_app(test_config=None):
@@ -31,4 +62,5 @@ def create_app(test_config=None):
     app.register_blueprint(comics.bp)
     app.add_url_rule("/", endpoint="index")
 
+    app.logger.info('Application created.')
     return app

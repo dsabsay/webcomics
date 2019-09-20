@@ -21,7 +21,6 @@ def index():
     for comic in comics:
         comic['numUnread'] = get_num_unread(comic['name'])
         comic['bookmark'] = get_bookmark(comic['name']) if comic['style'] == 'serial' else None
-        print(comic)
 
     return render_template('comics/index.html', comics=comics)
 
@@ -68,7 +67,6 @@ def bookmark():
 
     bookmark_url = request.form['bookmark_url']
     comic_name = get_comic_name_from_url(bookmark_url)
-    print(comic_name)
 
     db = get_db()
     existing = db.execute(
@@ -77,7 +75,6 @@ def bookmark():
     ).fetchone()
 
     result = None
-    print(existing)
     if existing is None:
         result = db.execute(
             'INSERT INTO bookmarks VALUES (?, ?, ?)',

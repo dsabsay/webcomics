@@ -36,7 +36,7 @@ def init_db():
     close_db()
 
 
-def run_shell_command(args, env=None):
+def run_shell_command(args, echo=False, env=None):
     '''
     Convenience wrapper around subprocess.run().
 
@@ -44,13 +44,15 @@ def run_shell_command(args, env=None):
     stderr. Checks return code, raising exception on non-zero exit code.
     '''
     cp = subprocess.run(args, check=False, capture_output=True, env=env)
-    click.echo(cp.stdout)
-    click.echo(cp.stderr, err=True)
+
+    if echo:
+        click.echo(cp.stdout)
+        click.echo(cp.stderr, err=True)
 
     cp.check_returncode()
 
 
-def backup_db(isManual):
+def backup_db(*, isManual):
     '''
     Performs the database backup, pushing to the configured repo
     on GitHub.
@@ -76,16 +78,16 @@ def backup_db(isManual):
 
     cwd = os.getcwd()
     os.chdir(local_repo)
-    run_shell_command(['git', 'add', backup_filename])
+    run_shell_command(['git', 'add', backup_filename], echo=True)
 
     commit_time = datetime.datetime.now(tz=datetime.timezone.utc)
     commit_msg = f'{"Manual" if isManual else "Scheduled"} DB backup on {commit_time} UTC'
-    run_shell_command(['git', 'commit', '-m', commit_msg])
+    run_shell_command(['git', 'commit', '-m', commit_msg], echo=True)
 
     deploy_key_path = current_app.config['DB_BACKUP_DEPLOY_KEY']
     env = copy.deepcopy(os.environ)
     env.update({ 'GIT_SSH_COMMAND': f'ssh -i {deploy_key_path}' })
-    run_shell_command(['git', 'push', 'origin', 'master'], env)
+    run_shell_command(['git', 'push', 'origin', 'master'], echo=True, env=env)
 
     os.chdir(cwd)
 
@@ -111,7 +113,7 @@ def backup_db_command():
         DB_BACKUP_REMOTE_REPO - URL of remote repository for DB backups
         DB_BACKUP_DEPLOY_KEY - path to SSH deploy key for DB backup repo on GitHub
     '''
-    backup_db(True)
+    backup_db(isManual=True)
     click.echo('Backup succeeded.')
 
 

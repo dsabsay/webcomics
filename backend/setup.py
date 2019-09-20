@@ -9,4 +9,9 @@ setup(
     install_required=[
         'flask',
     ],
+    # entry_points={
+    #     'console_scripts': [
+    #         'webcomics = webcomics.cli:cli'
+    #     ]
+    # }
 )
