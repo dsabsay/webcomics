@@ -35,7 +35,7 @@ dictConfig({
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_url_path='/webcomics/static')
     app.config.from_mapping(
         SECRET_KEY='dev_secret',
         DATABASE=os.path.join(app.instance_path, "webcomics.sqlite")

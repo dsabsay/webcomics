@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash
 
 from webcomics.db import get_db
 
-bp = Blueprint('auth', __name__, url_prefix='/auth', static_url_path='/webcomics/static')
+bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 def login_required(view):
