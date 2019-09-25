@@ -95,6 +95,7 @@ def backup_db(*, isManual):
 @click.command('init-db')
 @flask.cli.with_appcontext
 def init_db_command():
+    ''' Re-initializes the database. WARNING: This will delete any existing data! '''
     init_db()
     click.echo('Initialized the database.')
 

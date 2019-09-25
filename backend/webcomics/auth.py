@@ -1,10 +1,11 @@
 import functools
 
+import click
+import flask
 from flask import (
     Blueprint, redirect, g, render_template, flash, request, session, url_for
 )
-
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from webcomics.db import get_db
 
@@ -65,3 +66,22 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@click.command('add-user')
+@flask.cli.with_appcontext
+@click.argument('username')
+@click.argument('password')
+def add_user_command(username, password):
+    ''' Adds a new user to the database. '''
+    db = get_db()
+    db.execute(
+        'INSERT INTO users (name, password) VALUES (?, ?)',
+        (username, generate_password_hash(password))
+    )
+    db.commit()
+
+
+def init_app(app):
+    ''' Register commands with application instance. '''
+    app.cli.add_command(add_user_command)

@@ -57,6 +57,7 @@ def create_app(test_config=None):
 
     from . import auth
     app.register_blueprint(auth.bp, url_prefix="/webcomics")
+    auth.init_app(app)
 
     from . import comics
     app.register_blueprint(comics.bp, url_prefix="/webcomics")
