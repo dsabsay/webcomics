@@ -56,11 +56,11 @@ def create_app(test_config=None):
     db.init_app(app)
 
     from . import auth
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(auth.bp, url_prefix="/webcomics")
 
     from . import comics
-    app.register_blueprint(comics.bp)
-    app.add_url_rule("/", endpoint="index")
+    app.register_blueprint(comics.bp, url_prefix="/webcomics")
+    app.add_url_rule("/webcomics", endpoint="index")
 
     app.logger.info('Application created.')
     return app

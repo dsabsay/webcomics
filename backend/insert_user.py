@@ -4,7 +4,7 @@ import sqlite3
 from werkzeug.security import generate_password_hash
 
 def main(args):
-    conn = sqlite3.connect("instance/webcomics.sqlite")
+    conn = sqlite3.connect("instance/db/webcomics.sqlite")
 
     conn.execute(
         'INSERT INTO users (name, password) VALUES (?, ?)',
