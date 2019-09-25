@@ -1,5 +1,5 @@
 include webcomics/schema.sql
-include redeploy.sh
+include webcomics/redeploy.sh
 graft webcomics/static
 graft webcomics/templates
 global-exclude *.pyc
