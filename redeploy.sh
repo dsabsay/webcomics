@@ -19,6 +19,6 @@ pip install --upgrade 'git+https://github.com/dsabsay/webcomics.git#egg=webcomic
 # Copy production configuration
 cp conf/micro.py "${VIRTUAL_ENV}/var/webcomics-instance/config.py"
 
-gunicorn --bind=127.0.0.1:4020 --workers=2 --daemon --pidfile=gunicorn.pid 'webcomics:create_app()'
+gunicorn --bind=127.0.0.1:4020 --workers=2 --daemon --pid=gunicorn.pid 'webcomics:create_app()'
 
 echo 'Done.'
