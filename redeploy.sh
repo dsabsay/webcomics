@@ -14,7 +14,7 @@ if [ -f 'gunicorn.pid' ]; then
 fi
 
 pip uninstall webcomics
-pip install --upgrade 'git+https://github.com/dsabsay/webcomics.git#egg=webcomics&subdirectory=backend'
+pip install --upgrade 'git+https://github.com/dsabsay/webcomics.git#egg=webcomics&subdirectory=app'
 
 gunicorn --bind=127.0.0.1:4020 --workers=2 --daemon --pidfile=gunicorn.pid 'webcomics:create_app()'
 

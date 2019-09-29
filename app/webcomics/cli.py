@@ -3,7 +3,7 @@ import flask
 from flask import current_app, g
 from flask.cli import AppGroup
 
-from webcomics.db import init_db, backup_db
+from webcomics.db import init_db, backup_db, get_db
 from webcomics import jobs
 
 
@@ -31,6 +31,46 @@ def backup_db_command():
     '''
     backup_db(isManual=True)
     click.echo('Backup succeeded.')
+
+
+@click.command('add-comic')
+@flask.cli.with_appcontext
+@click.argument('name')
+@click.argument('author')
+@click.argument('style')
+@click.argument('link')
+@click.option('--icon-url', type=str, help='URL to icon for comic.')
+def add_comic_command(name, author, style, link, icon_url=None):
+    '''
+    Adds a new comic to the database.
+
+    STYLE must be either "serial" or "episodic".
+    '''
+    if style not in ['serial', 'episodic']:
+        click.echo('Invalid input. style must be either "serial" or "episodic".', err=True)
+        sys.exit(1)
+
+    db = get_db()
+    db.execute(
+        'INSERT INTO comics (name, author, link, iconUrl, style) VALUES (?, ?, ?, ?, ?)',
+        (name, author, link, icon_url, style)
+    )
+    db.commit()
+    click.echo(f'Added {name} to the database.')
+
+
+@click.command('add-user')
+@flask.cli.with_appcontext
+@click.argument('username')
+@click.argument('password')
+def add_user_command(username, password):
+    ''' Adds a new user to the database. '''
+    db = get_db()
+    db.execute(
+        'INSERT INTO users (name, password) VALUES (?, ?)',
+        (username, generate_password_hash(password))
+    )
+    db.commit()
 
 
 webcomicsd_cli = AppGroup(
@@ -76,4 +116,6 @@ def status_webcomicsd_command():
 def init_cli(app):
     app.cli.add_command(init_db_command)
     app.cli.add_command(backup_db_command)
+    app.cli.add_command(add_user_command)
+    app.cli.add_command(add_comic_command)
     app.cli.add_command(webcomicsd_cli)

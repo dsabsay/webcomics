@@ -21,7 +21,7 @@ handler = logging.handlers.RotatingFileHandler(
     backupCount=3
 )
 handler.setFormatter(formatter)
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 
@@ -41,7 +41,11 @@ def start():
     keep_fds = [handler.stream.fileno() for handler in logger.handlers]
 
     # Set jobs
-    schedule.every().day.do(backup_db_job)
+    scheduler = schedule.default_scheduler
+    job = schedule.Job(current_app.config["DB_BACKUP_INTERVAL"], scheduler)
+    getattr(job, current_app.config["DB_BACKUP_TIME_UNIT"]).do(backup_db_job)
+
+    # schedule.every().day.do(backup_db_job)
 
     daemon = daemonize.Daemonize(
         app='webcomicsd',
