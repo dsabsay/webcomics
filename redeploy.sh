@@ -7,6 +7,11 @@ set -e
 # Reinstalls webcomics from master branch
 # Restarts gunicorn
 
+if [[ -z "${VIRTUAL_ENV}" ]]; then
+    echo 'ERROR: Script must be run in the webcomics virtual environment'
+    exit 1
+fi
+
 cd "${0%/*}"  # Change into directory of script
 
 if [ -f 'gunicorn.pid' ]; then
