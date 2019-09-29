@@ -38,6 +38,8 @@ The app has the following configuration parameters.
 - [x] Why are requests getting logged in `jobs.log`?
 - [x] Add CLI command to add a comic.
 - [x] Deploy
+- [ ] Add interval/unit to `webcomicsd status` output.
+- [ ] Fix webpage titles. They're getting populated with raw HTML somehow.
 - [ ] Add "last db backup on ..." somewhere on front page or hidden page.
 - [ ] Bookmark enhancement: Smartly handle when the user is not logged in by saving URL temporarily, requesting login, and then saving the bookmark when the user logs in.
 - [ ] Implement `reads/` feature to mark strips as read when clicked.
