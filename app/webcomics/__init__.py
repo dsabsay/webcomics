@@ -68,7 +68,7 @@ def create_app(test_config=None):
 
     is_valid, missing = config_is_valid(app.config)
     if not is_valid:
-        app.logger.error('Invalid configuration. Exiting. Missing: {missing}.')
+        app.logger.error(f'Invalid configuration. Exiting. Missing: {missing}.')
         sys.exit(1)
 
     # TODO: handle this better
