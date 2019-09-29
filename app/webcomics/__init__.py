@@ -56,7 +56,8 @@ def create_app(test_config=None):
     init_logging(app)
 
     if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
+        with app.app_context():  # Allow access to current_app in config.py
+            app.config.from_pyfile('config.py', silent=True)
     else:
         app.config.from_mapping(test_config)
 

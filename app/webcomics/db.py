@@ -68,7 +68,7 @@ def backup_db(*, isManual):
     )
 
     backup_db = sqlite3.connect(
-        os.path.join(local_repo, backup_filename),
+        backup_path,
         detect_types=sqlite3.PARSE_DECLTYPES
     )
     live_db = get_db()
