@@ -1,6 +1,6 @@
 javascript:(function(){
   const form = document.createElement('form');
-  form.setAttribute('action', 'http://localhost:5000/bookmark');
+  form.setAttribute('action', 'http://35.203.129.3/webcomics/bookmark');
   form.setAttribute('method', 'POST');
 
   const input = document.createElement('input');
