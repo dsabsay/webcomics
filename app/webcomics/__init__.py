@@ -52,7 +52,8 @@ def config_is_valid(config):
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True, static_url_path='/webcomics/static')
+    os.environ['SCRIPT_NAME'] = '/webcomics'
+    app = Flask(__name__, instance_relative_config=True, static_url_path='/static')
     init_logging(app)
 
     if test_config is None:
@@ -75,11 +76,12 @@ def create_app(test_config=None):
     db.init_app(app)
 
     from . import auth
-    app.register_blueprint(auth.bp, url_prefix="/webcomics")
+    app.register_blueprint(auth.bp)
 
     from . import comics
-    app.register_blueprint(comics.bp, url_prefix="/webcomics")
-    app.add_url_rule("/webcomics", endpoint="index")
+    app.register_blueprint(comics.bp)
+    app.add_url_rule('/', endpoint='index')
+    # app.add_url_rule("/webcomics", endpoint="index")
 
     # Initialize CLI commands
     with app.app_context():
