@@ -38,7 +38,7 @@ The app has the following configuration parameters.
 - [x] Why are requests getting logged in `jobs.log`?
 - [x] Add CLI command to add a comic.
 - [ ] Bookmark enhancement: Smartly handle when the user is not logged in by saving URL temporarily, requesting login, and then saving the bookmark when the user logs in.
-- [ ] Deploy
+- [x] Deploy
 - [ ] Implement `reads/` feature to mark strips as read when clicked.
 - [ ] Viewer (for webcomic name)
 - [ ] RSS feed updater
