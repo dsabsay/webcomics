@@ -25,8 +25,8 @@ pip install --upgrade 'git+https://github.com/dsabsay/webcomics.git#egg=webcomic
 cp conf/micro.py "${VIRTUAL_ENV}/var/webcomics-instance/config.py"
 
 # Generate secret key for encrypting session data
-flask_secret_key=$(python -c 'import os; print(os.urandom(16).hex())')
+python -c 'import os; print(os.urandom(16).hex())' > "${VIRTUAL_ENV}/var/webcomics-instance/flask_secret_key"
 
-gunicorn --bind=127.0.0.1:4020 --workers=2 --daemon --pid=gunicorn.pid --env FLASK_SECRET_KEY="${flask_secret_key}" 'webcomics:create_app()'
+gunicorn --bind=127.0.0.1:4020 --workers=2 --daemon --pid=gunicorn.pid 'webcomics:create_app()'
 
 echo 'Done.'
