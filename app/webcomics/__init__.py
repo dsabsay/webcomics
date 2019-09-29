@@ -48,7 +48,11 @@ def config_is_valid(config):
         'DB_BACKUP_TIME_UNIT'
     ]
 
-    return all(config.get(key, None) is not None for key in required)
+    missing = [key for key in required if config.get(key, None) is None]
+    if len(missing) > 0:
+        return (False, missing)
+
+    return (True, None)
 
 
 def create_app(test_config=None):
@@ -62,8 +66,9 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    if not config_is_valid(app.config):
-        app.logger.error('Invalid configuration. Exiting. Check that all required fields are set.')
+    is_valid, missing = config_is_valid(app.config)
+    if not is_valid:
+        app.logger.error('Invalid configuration. Exiting. Missing: {missing}.')
         sys.exit(1)
 
     # TODO: handle this better
