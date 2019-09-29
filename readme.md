@@ -1,5 +1,9 @@
 # webcomics
 
+## Requirements
+* Python 3.7 (because this uses `sqlite3.Connection.backup()`)
+* On Ubuntu, the `python3.7-dev` package is required by `psutil`
+
 ## Deploying
 To deploy the app, follow these steps:
 1. Create a Python 3 virtual environment: `python3 -m venv env`
