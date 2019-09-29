@@ -5,7 +5,7 @@ import flask
 from flask import (
     Blueprint, redirect, g, render_template, flash, request, session, url_for
 )
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 from webcomics.db import get_db
 
