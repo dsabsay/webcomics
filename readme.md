@@ -38,6 +38,8 @@ The app has the following configuration parameters.
 - [x] Why are requests getting logged in `jobs.log`?
 - [x] Add CLI command to add a comic.
 - [x] Deploy
+- [ ] Improve layout on mobile.
+- [ ] Display bookmarklet on page. Or better yet, provide a button that will automatically add the bookmark.
 - [ ] Add interval/unit to `webcomicsd status` output.
 - [ ] Fix webpage titles. They're getting populated with raw HTML somehow.
 - [ ] Add "last db backup on ..." somewhere on front page or hidden page.
