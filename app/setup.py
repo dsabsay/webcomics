@@ -10,6 +10,7 @@ setup(
         'flask>=1.1.1',
         'daemonize>=2.5.0',
         'psutil>=5.6.3',
-        'schedule>=0.6.0'
+        'schedule>=0.6.0',
+        'gunicorn>=19.9.0'
     ],
 )
