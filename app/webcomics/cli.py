@@ -2,6 +2,7 @@ import click
 import flask
 from flask import current_app, g
 from flask.cli import AppGroup
+from werkzeug.security import generate_password_hash
 
 from webcomics.db import init_db, backup_db, get_db
 from webcomics import jobs
