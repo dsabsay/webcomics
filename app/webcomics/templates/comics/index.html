@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        {% for comic in comics %}
+            <div class="row middle-xs">
+                <div class="col-xs-1">
+                    <img height="32" src="{{ comic['iconUrl'] }}" alt="Icon">
+                </div>
+                <div class="col-xs">
+                    <a href="{{ url_for('comics.strips', comic_name=comic['name']) }}">{{ comic['name'] }}</a>
+                </div>
+                <div class="col-xs-1 center-xs">
+                    {% if comic['style'] == "serial" %}
+                        {% if comic['bookmark'] != None %}
+                            <img height="32" src="{{ url_for('static', filename='icons/bookmark_filled.png') }}">
+                        {% else %}
+                            <img height="32" src="{{ url_for('static', filename='icons/bookmark_outline.png') }}">
+                        {% endif %}
+                    {% elif comic['style'] == "episodic" %}
+                        <div "col-xs">
+                        {{ comic["numUnread"] }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

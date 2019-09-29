@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+        {% if bookmark != None %}
+        <div class="col-xs">
+            <img height="32" src="{{ url_for('static', filename='icons/check_circle_filled.png') }}">
+            <h6>Bookmark saved!</h6>
+        </div>
+        {% else %}
+        <div class="col-xs">
+            <img height="32" src="{{ url_for('static', filename='icons/error_filled.png') }}">
+            <h6>An error occurred :(</h6>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

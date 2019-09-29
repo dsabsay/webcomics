@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <div class="container">
+        <div class="row middle-xs">
+            <img class="col-xs-1" height="32" alt="Icon" src="{{ comic['iconUrl'] }}">
+            <h4 class="col-xs comic-title">{% block title %}
+                <a class="subtle-link" href="{{ comic['link'] }}">{{ comic['name'] }}</a>
+            {% endblock %}</h4>
+            <div class="col-xs end-xs bottom-xs author"><b>Author:</b> {{ comic['author'] }}</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for strip in strips %}
+        <div class="row">
+            <div class="col-xs">
+                <a class="{{ 'was-read' if strip['wasRead'] == True else 'unread' }}" href="{{ strip['link'] }}">{{ strip['title'] }}</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% if comic['style'] == "serial" %}
+        <div class="row start-xs middle-xs">
+            {% if comic['bookmark'] != None %}
+            <div class="col-xs-1">
+                <img height="32" src="{{ url_for('static', filename='icons/bookmark_filled.png') }}">
+            </div>
+            <div class="col-xs">
+                <a href="{{ comic['bookmark'] }}">{{ comic['bookmark'] }}</a>
+            </div>
+            {% else %}
+                <div class="col-xs">
+                    No bookmark.
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
