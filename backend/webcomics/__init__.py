@@ -34,17 +34,32 @@ dictConfig({
 })
 
 
+def config_is_valid(config):
+    '''
+    Returns True if config has necessary keys, False otherwise.
+    '''
+    required = [
+        'DATABASE',
+        'DB_BACKUP_LOCAL_REPO',
+        'DB_BACKUP_REMOTE_REPO',
+        'DB_BACKUP_DEPLOY_KEY',
+        'SECRET_KEY'
+    ]
+
+    return all(config[key] is not None for key in required)
+
+
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True, static_url_path='/webcomics/static')
-    app.config.from_mapping(
-        SECRET_KEY='dev_secret',
-        DATABASE=os.path.join(app.instance_path, "webcomics.sqlite")
-    )
 
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:
         app.config.from_mapping(test_config)
+
+    if not config_is_valid(app.config):
+        app.logger.error('Invalid configuration. Exiting.')
+        sys.exit(1)
 
     # TODO: handle this better
     try:
