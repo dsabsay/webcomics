@@ -37,8 +37,9 @@ The app has the following configuration parameters.
 - [x] DB backup job
 - [x] Why are requests getting logged in `jobs.log`?
 - [x] Add CLI command to add a comic.
-- [ ] Bookmark enhancement: Smartly handle when the user is not logged in by saving URL temporarily, requesting login, and then saving the bookmark when the user logs in.
 - [x] Deploy
+- [ ] Add "last db backup on ..." somewhere on front page or hidden page.
+- [ ] Bookmark enhancement: Smartly handle when the user is not logged in by saving URL temporarily, requesting login, and then saving the bookmark when the user logs in.
 - [ ] Implement `reads/` feature to mark strips as read when clicked.
 - [ ] Viewer (for webcomic name)
 - [ ] RSS feed updater
