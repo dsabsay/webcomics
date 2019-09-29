@@ -1,4 +1,8 @@
+import logging
+
 from webcomics.db import backup_db
+
+logger = logging.getLogger(__name__)
 
 
 def backup_db_job():

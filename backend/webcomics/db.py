@@ -92,36 +92,7 @@ def backup_db(*, isManual):
     os.chdir(cwd)
 
 
-@click.command('init-db')
-@flask.cli.with_appcontext
-def init_db_command():
-    ''' Re-initializes the database. WARNING: This will delete any existing data! '''
-    init_db()
-    click.echo('Initialized the database.')
-
-
-@click.command('backup-db')
-@flask.cli.with_appcontext
-def backup_db_command():
-    '''
-    Creates a backup of the database, writing it to a file in a Git
-    repository, comitting it, and pushing the changes to the `origin`
-    remote. The repository must already exist and the remote must be
-    configured.
-
-    This relies on the following configuration items:
-        DB_BACKUP_LOCAL_REPO - path to local Git repository for backups
-        DB_BACKUP_REMOTE_REPO - URL of remote repository for DB backups
-        DB_BACKUP_DEPLOY_KEY - path to SSH deploy key for DB backup repo on GitHub
-    '''
-    backup_db(isManual=True)
-    click.echo('Backup succeeded.')
-
-
 def init_app(app):
     """ Register DB functions with application instance. """
     # close db connection after response is returned
     app.teardown_appcontext(close_db)
-
-    app.cli.add_command(init_db_command)
-    app.cli.add_command(backup_db_command)

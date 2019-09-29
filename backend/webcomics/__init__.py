@@ -63,5 +63,11 @@ def create_app(test_config=None):
     app.register_blueprint(comics.bp, url_prefix="/webcomics")
     app.add_url_rule("/webcomics", endpoint="index")
 
+    # Initialize CLI commands
+    with app.app_context():
+        # The jobs sub-package configures logging based on app.config
+        from . import cli
+    cli.init_cli(app)
+
     app.logger.info('Application created.')
     return app
